@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var QuestLog = ViewBag.QuestLog as List<Quest>;
+}
+<style>
+    .questlog {
+        list-style: none;
+    }
+
+    .questlog li {
+        border: 3px solid #ccc;
+        border-radius: 7px;
+        margin-top: 5px;
+        padding: 10px;
+
+        background-color: #eee;
+    }
+
+    .questlog h3 {
+        font-size: large;
+        font-weight: 700;
+    }
+
+    li.complete {
+        background-color: #d4edda;
+    }
+</style>
+<h1>Quest log</h1>
+<p>Here's a list of ongoing quests:</p>
+<ul class="questlog">
+    @if(QuestLog.Count > 0)
+    {
+        @foreach (var quest in QuestLog)
+        {
+            <li class="@(quest.complete ? "complete" : "")">
+                <h5>@quest.name @(quest.complete ? " : Task Completed!" : ""</h5>
+                <p>@quest.description</p>
+                <form action=@(quest.complete ? "/Quest/Reset" : "/Quest/HandIn")>
+                    <input type="hidden" value="@quest.name" name="name" />
+                    <button type="submit">@(quest.complete ? "Reset" : "Turn in quest!")</button>
+                </form>
+            </li>
+        }
+    } else
+    {
+        <li>
+            <h3>No quests</h3>
+            <p>There are no quests currently recorded at the quest log. Please add a quest to begin tracking.</p>
+        </li>
+    }
+    <li>
+        <h3>New quest:</h3>
+        <form action="/Quest/Add">
+            <input name="title" placeholder="Title" type="text" />
+            <input name="description" placeholder="Description" type="text" />
+            <input name="experience" placeholder="Experience" type="number" />
+            <input type="submit" value="Add quest"/>
+        </form>
+    </li>
+</ul>
