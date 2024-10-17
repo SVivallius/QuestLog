@@ -1,31 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-    var QuestLog = ViewBag.QuestLog as List<Quest>;
+    var QuestLog = ViewBag.QuestLog as List<QuestViewModel>;
 }
-<style>
-    .questlog {
-        list-style: none;
-    }
-
-    .questlog li {
-        border: 3px solid #ccc;
-        border-radius: 7px;
-        margin-top: 5px;
-        padding: 10px;
-
-        background-color: #eee;
-    }
-
-    .questlog h3 {
-        font-size: large;
-        font-weight: 700;
-    }
-
-    li.complete {
-        background-color: #d4edda;
-    }
-</style>
 <h1>Quest log</h1>
 <p>Here's a list of ongoing quests:</p>
 <ul class="questlog">
@@ -33,12 +10,12 @@
     {
         @foreach (var quest in QuestLog)
         {
-            <li class="@(quest.complete ? "complete" : "")">
-                <h5>@quest.name @(quest.complete ? " : Task Completed!" : ""</h5>
-                <p>@quest.description</p>
-                <form action=@(quest.complete ? "/Quest/Reset" : "/Quest/HandIn")>
-                    <input type="hidden" value="@quest.name" name="name" />
-                    <button type="submit">@(quest.complete ? "Reset" : "Turn in quest!")</button>
+            <li class="@(quest.Complete ? "complete" : "")">
+                <h5>@quest.Name @(quest.Complete ? " : Task Completed!" : "")</h5>
+                <p>@quest.Description</p>
+                <form action=@(quest.Complete ? "/Quest/Reset" : "/Quest/HandIn")>
+                    <input type="hidden" value="@quest.Name" name="name" />
+                    <button type="submit">@(quest.Complete ? "Reset" : "Turn in quest!")</button>
                 </form>
             </li>
         }

@@ -4,7 +4,7 @@ namespace QuestLog.Controllers;
 
 public class QuestController : Controller
 {
-    private static List<Quest> QuestLog = new List<Quest>();
+    private static List<QuestViewModel> QuestLog = new List<QuestViewModel>();
 
     public IActionResult Index()
     {
@@ -14,12 +14,12 @@ public class QuestController : Controller
 
     public IActionResult Add(string title, string description, int experience)
     {
-        Quest q = new Quest()
+        QuestViewModel q = new QuestViewModel()
         {
-            name = title,
-            description = description,
-            experience = experience,
-            complete = false
+            Name = title,
+            Description = description,
+            Experience = experience,
+            Complete = false
         };
 
         QuestLog.Add(q);
@@ -30,7 +30,7 @@ public class QuestController : Controller
     {
         var q = FindInList(name);
         var i = QuestLog.IndexOf(q);
-        QuestLog[i].complete = true;
+        QuestLog[i].Complete = true;
         return RedirectToAction("Index");
     }
 
@@ -38,14 +38,14 @@ public class QuestController : Controller
     {
         var q = FindInList(name);
         var i = QuestLog.IndexOf(q);
-        QuestLog[i].complete = false;
+        QuestLog[i].Complete = false;
         return RedirectToAction("Index");
     }
 
-    private Quest FindInList(string name)
+    private QuestViewModel FindInList(string name)
     {
         var q = QuestLog
-            .Where(q => q.name.Equals(name))
+            .Where(q => q.Name.Equals(name))
             .FirstOrDefault();
         return q;
     }
