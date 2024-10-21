@@ -22,7 +22,7 @@ public class MigrateController : ControllerBase
         _logger.LogInformation($"Recieved request from: {Request.HttpContext.Connection.RemoteIpAddress}");
 
         var pending = await _db.Database.GetPendingMigrationsAsync();
-        if (pending.Count()! > 0)
+        if (pending.Count() < 1)
             return Results.Ok("No pending migrations");
 
         await _db.Database.BeginTransactionAsync();

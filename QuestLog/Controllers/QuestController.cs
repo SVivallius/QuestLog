@@ -1,14 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Common.Services;
+using Microsoft.AspNetCore.Mvc;
 using QuestLog.Models;
 namespace QuestLog.Controllers;
 
 public class QuestController : Controller
 {
     private static List<QuestViewModel> QuestLog = new List<QuestViewModel>();
+    private readonly HttpService _http;
+
+    public QuestController(HttpService http)
+    {
+        _http = http;
+    }
 
     public IActionResult Index()
     {
-        ViewBag.QuestLog = QuestLog;
+        ViewBag.QuestLog = _http.GetFromService(ServiceHostList.Quests, "quests/");
         return View();
     }
 
@@ -18,11 +25,13 @@ public class QuestController : Controller
         {
             Name = title,
             Description = description,
-            Experience = experience,
-            Complete = false
+            Experience = experience
         };
 
-        QuestLog.Add(q);
+        //QuestLog.Add(q);
+
+        
+
         return RedirectToAction("Index");
     }
 

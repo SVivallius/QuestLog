@@ -5,11 +5,11 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestLog_MVC", "QuestLog\QuestLog_MVC.csproj", "{EAF985B7-D6AA-4A85-A67C-F8DF4E288E4A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestLog_Quests", "QuestLog_Quests\QuestLog_Quests.csproj", "{3C5D6D93-BD3D-4FA3-97F9-18248A0A7870}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quests", "QuestLog_Quests\Quests.csproj", "{3C5D6D93-BD3D-4FA3-97F9-18248A0A7870}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1BFC3818-572D-4337-8D75-5C8D43E07565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{BABA6998-4912-4095-B3A2-257CE12818AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{BABA6998-4912-4095-B3A2-257CE12818AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
