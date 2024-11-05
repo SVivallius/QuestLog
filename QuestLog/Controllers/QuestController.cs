@@ -38,27 +38,19 @@ public class QuestController : Controller
         return RedirectToAction("Index");
     }
 
-    public IActionResult HandIn(string name)
+    public async Task<IActionResult> HandInOrReset(QuestViewModel q)
     {
-        var q = FindInList(name);
-        var i = QuestLog.IndexOf(q);
-        QuestLog[i].Complete = true;
+        q.Complete = !q.Complete;
+        string payload = JsonSerializer.Serialize(q, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var result = await _http.PutToServiceAsync<string>(ServiceHostList.Quests, $"quests/{q.Id}", payload);
+        _logger.LogInformation(result);
+
         return RedirectToAction("Index");
     }
 
-    public IActionResult Reset(string name)
+    public async Task<IActionResult> Abandon(int id)
     {
-        var q = FindInList(name);
-        var i = QuestLog.IndexOf(q);
-        QuestLog[i].Complete = false;
+        var result = await _http.DeleteFromServiceAsync<string>(ServiceHostList.Quests, $"quests/{id}");
         return RedirectToAction("Index");
-    }
-
-    private QuestViewModel FindInList(string name)
-    {
-        var q = QuestLog
-            .Where(q => q.Name.Equals(name))
-            .FirstOrDefault();
-        return q;
     }
 }
