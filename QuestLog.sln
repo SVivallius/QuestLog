@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quests", "QuestLog_Quests\Q
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1BFC3818-572D-4337-8D75-5C8D43E07565}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{BABA6998-4912-4095-B3A2-257CE12818AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{73AF9B5C-4134-41CB-964D-055BD7DCF5A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{1BFC3818-572D-4337-8D75-5C8D43E07565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BFC3818-572D-4337-8D75-5C8D43E07565}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BFC3818-572D-4337-8D75-5C8D43E07565}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BABA6998-4912-4095-B3A2-257CE12818AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BABA6998-4912-4095-B3A2-257CE12818AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BABA6998-4912-4095-B3A2-257CE12818AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BABA6998-4912-4095-B3A2-257CE12818AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73AF9B5C-4134-41CB-964D-055BD7DCF5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73AF9B5C-4134-41CB-964D-055BD7DCF5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73AF9B5C-4134-41CB-964D-055BD7DCF5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73AF9B5C-4134-41CB-964D-055BD7DCF5A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

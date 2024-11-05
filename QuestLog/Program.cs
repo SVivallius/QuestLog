@@ -1,7 +1,5 @@
 using Common.Services;
-
 namespace QuestLog;
-
 public class Program
 {
     public static void Main(string[] args)
@@ -24,7 +22,6 @@ public class Program
 
         //app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
         app.UseAuthorization();
 

@@ -6,7 +6,7 @@
 <h1>Quest log</h1>
 <p>Here's a list of ongoing quests:</p>
 <ul class="questlog">
-    @if(QuestLog.Count > 0)
+    @if(QuestLog != null && QuestLog.Count > 0)
     {
         @foreach (var quest in QuestLog)
         {

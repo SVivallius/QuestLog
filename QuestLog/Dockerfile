@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["QuestLog/QuestLog_MVC.csproj", "QuestLog/"]
+COPY ["Common/Common.csproj", "Common/"]
 RUN dotnet restore "./QuestLog/QuestLog_MVC.csproj"
 COPY . .
 WORKDIR "/src/QuestLog"

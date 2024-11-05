@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuestLog_Quests.Data;
 using QuestLog_Quests.Data.Entities;
+using System.Text.Json;
 namespace QuestLog_Quests.Controllers;
 
 [Route("api/[controller]")]
@@ -38,18 +39,28 @@ public class QuestsController : ControllerBase
 
     // POST api/<QuestsController>
     [HttpPost]
-    public async Task<IResult> Post([FromBody] Quest quest)
+    public async Task<IResult> Post(Quest payload)
     {
-        var result = _db.Quests
-            .Add(quest);
-
-        if (await _db.SaveChangesAsync() < 1)
+        _logger.LogInformation("Endpoint entered its code block successfully");
+        try
         {
-            _logger.LogError("Unable to save to database.");
+            //var quest = JsonSerializer.Deserialize<Quest>(payload);
+            var result = _db.Quests
+                .Add(payload);
+
+            if (await _db.SaveChangesAsync() < 1)
+            {
+                _logger.LogError("Unable to save to database.");
+                return Results.StatusCode(500);
+            }
+
+            return Results.Created();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex.Message);
             return Results.StatusCode(500);
         }
-
-        return Results.Created();
     }
 
     // PUT api/<QuestsController>/5
