@@ -24,11 +24,12 @@ public class HttpService
 
         try
         {
+            //_logger.LogInformation(request.ToString());
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                if (content != null || content == String.Empty)
+                if (content != null || content != String.Empty)
                     return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 return default;
             }

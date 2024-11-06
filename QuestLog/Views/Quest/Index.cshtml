@@ -13,8 +13,13 @@
             <li class="@(quest.Complete ? "complete" : "")">
                 <h5>@quest.Name @(quest.Complete ? " : Task Completed!" : "")</h5>
                 <p>@quest.Description</p>
-                <form action=@(quest.Complete ? "/Quest/Reset" : "/Quest/HandInOrReset")>
-                    <input type="hidden" value="@quest" name="Quest" />
+                <form action="/Quest/HandInOrReset")>
+                    <!-- ERROR ON INPUT HERE -->
+                    <input type="hidden" value="@quest.Id" name="Id" />
+                    <input type="hidden" value="@quest.Name" name="Name" />
+                    <input type="hidden" value="@quest.Description" name="Description" />
+                    <input type="hidden" value="@quest.Experience" name="Experience" />
+                    <input type="hidden" value="@quest.Complete" name="Complete" />
                     <button type="submit">@(quest.Complete ? "Reset" : "Turn in quest!")</button>
                 </form>
             </li>
@@ -29,7 +34,7 @@
     <li>
         <h3>New quest:</h3>
         <form action="/Quest/Add">
-            <input name="title" placeholder="Title" type="text" />
+            <input name="name" placeholder="Title" type="text" />
             <input name="description" placeholder="Description" type="text" />
             <input name="experience" placeholder="Experience" type="number" />
             <input type="submit" value="Add quest"/>

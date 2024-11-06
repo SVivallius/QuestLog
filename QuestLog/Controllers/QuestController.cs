@@ -22,29 +22,30 @@ public class QuestController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Add(string title, string description, int experience)
+    public async Task<IActionResult> Add(string name, string description, int experience)
     {
         QuestViewModel q = new QuestViewModel()
         {
-            Name = title,
+            Name = name,
             Description = description,
             Experience = experience,
             Complete = false
         };
         string payload = JsonSerializer.Serialize(q, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        var resource = await _http.PostToServiceAsync<string>(ServiceHostList.Quests, "quests", payload);
-        _logger.LogInformation(resource);
+        var result = await _http.PostToServiceAsync<string>(ServiceHostList.Quests, "quests/", payload);
+        _logger.LogInformation(result);
 
         return RedirectToAction("Index");
     }
 
     public async Task<IActionResult> HandInOrReset(QuestViewModel q)
     {
-        q.Complete = !q.Complete;
+        _logger.LogInformation($"Before update:\n{q.ToString()}");
+        q.Complete = (!q.Complete);
         string payload = JsonSerializer.Serialize(q, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         var result = await _http.PutToServiceAsync<string>(ServiceHostList.Quests, $"quests/{q.Id}", payload);
-        _logger.LogInformation(result);
 
+        _logger.LogInformation($"After update:\n{q.ToString()}");
         return RedirectToAction("Index");
     }
 

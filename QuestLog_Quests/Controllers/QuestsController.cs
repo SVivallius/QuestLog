@@ -63,25 +63,23 @@ public class QuestsController : ControllerBase
 
     // PUT api/<QuestsController>/5
     [HttpPut("{id}")]
-    public async Task<IResult> Put(int id, string payload)
+    public async Task<IResult> Put(int id, Quest payload)
     {
-        var quest = JsonSerializer.Deserialize<Quest>(payload, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         try
         {
             var entity = await _db.Quests
-                .Where(e => e.Id.Equals(id))
-                .FirstOrDefaultAsync();
+                .AnyAsync(e => e.Id.Equals(id));
 
-            if (entity == null)
+            if (entity == false)
                 return Results.NotFound();
 
-            quest.Id = entity.Id;
-            _db.Update(quest);
+            _db.Update(payload);
             if (await _db.SaveChangesAsync() < 1)
             {
                 _logger.LogError("Unable to save to database.");
                 return Results.StatusCode(500);
             }
+
             return Results.Ok();    
         }
         catch (Exception ex)
