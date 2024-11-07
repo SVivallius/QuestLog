@@ -13,15 +13,10 @@
             <li class="@(quest.Complete ? "complete" : "")">
                 <h5>@quest.Name @(quest.Complete ? " : Task Completed!" : "")</h5>
                 <p>@quest.Description</p>
-                <form action="/Quest/HandInOrReset")>
-                    <!-- ERROR ON INPUT HERE -->
-                    <input type="hidden" value="@quest.Id" name="Id" />
-                    <input type="hidden" value="@quest.Name" name="Name" />
-                    <input type="hidden" value="@quest.Description" name="Description" />
-                    <input type="hidden" value="@quest.Experience" name="Experience" />
-                    <input type="hidden" value="@quest.Complete" name="Complete" />
-                    <button type="submit">@(quest.Complete ? "Reset" : "Turn in quest!")</button>
-                </form>
+                <input
+                    type="button"
+                    value="@(quest.Complete ? "Reset" : "Turn in quest!")"
+                    onclick="location.href='@Url.Action("HandInOrReset","Quest", new { id = quest.Id})'" />
             </li>
         }
     } else

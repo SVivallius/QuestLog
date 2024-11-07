@@ -80,7 +80,7 @@ public class QuestsController : ControllerBase
                 return Results.StatusCode(500);
             }
 
-            return Results.Ok();    
+            return Results.NoContent();    
         }
         catch (Exception ex)
         {

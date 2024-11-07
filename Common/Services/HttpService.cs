@@ -29,8 +29,11 @@ public class HttpService
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                if (content != null || content != String.Empty)
+                if (content != null || content.Trim() != String.Empty)
+                {
                     return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                }
+                    
                 return default;
             }
             _logger.LogError($"Recieved from {service}: {response.StatusCode}");

@@ -38,14 +38,12 @@ public class QuestController : Controller
         return RedirectToAction("Index");
     }
 
-    public async Task<IActionResult> HandInOrReset(QuestViewModel q)
+    public async Task<IActionResult> HandInOrReset(int id)
     {
-        _logger.LogInformation($"Before update:\n{q.ToString()}");
+        var q = await _http.GetFromServiceAsync<QuestViewModel>(ServiceHostList.Quests, $"quests/{id}");
         q.Complete = (!q.Complete);
         string payload = JsonSerializer.Serialize(q, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         var result = await _http.PutToServiceAsync<string>(ServiceHostList.Quests, $"quests/{q.Id}", payload);
-
-        _logger.LogInformation($"After update:\n{q.ToString()}");
         return RedirectToAction("Index");
     }
 
