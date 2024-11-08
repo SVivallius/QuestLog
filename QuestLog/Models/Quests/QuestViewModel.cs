@@ -1,4 +1,4 @@
-﻿namespace QuestLog.Models;
+﻿namespace QuestLog_MVC.Models.Quests;
 public class QuestViewModel
 {
     public int Id { get; set; }
@@ -6,9 +6,5 @@ public class QuestViewModel
     public string Description { get; set; }
     public int Experience { get; set; }
     public bool Complete { get; set; } = false;
-
-    public override string ToString()
-    {
-        return $"{{\n\tId: {Id},\n\tName: {Name},\n\tDescription: {Description},\n\tExperience: {Experience},\n\tCompleted: {Complete}\n}}";
-    }
+    public int? CategoryId { get; set; }
 }

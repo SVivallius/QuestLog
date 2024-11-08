@@ -31,6 +31,7 @@ public class HttpService
                 var content = await response.Content.ReadAsStringAsync();
                 if (content != null || content.Trim() != String.Empty)
                 {
+                    _logger.LogInformation(content);
                     return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 }
                     

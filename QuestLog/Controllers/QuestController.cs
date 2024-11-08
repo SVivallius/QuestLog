@@ -1,6 +1,6 @@
 ﻿using Common.Services;
 using Microsoft.AspNetCore.Mvc;
-using QuestLog.Models;
+using QuestLog_MVC.Models.Quests;
 using System.Text.Json;
 namespace QuestLog.Controllers;
 

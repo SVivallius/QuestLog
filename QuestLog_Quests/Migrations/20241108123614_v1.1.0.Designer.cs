@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuestLog_Quests.Data;
 
@@ -10,9 +11,11 @@ using QuestLog_Quests.Data;
 namespace QuestLog_Quests.Migrations
 {
     [DbContext(typeof(QuestLog_QuestContext))]
-    partial class QuestLog_QuestContextModelSnapshot : ModelSnapshot
+    [Migration("20241108123614_v1.1.0")]
+    partial class v110
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -37,6 +37,18 @@ public class QuestsController : ControllerBase
         return Results.Ok(entity);
     }
 
+    // GET api/<QuestController>/bycategory/5
+    [Route("bycategory/{id}")]
+    public async Task<IResult> GetByCategoryAsync(int id)
+    {
+        var entities = await _db.Quests
+            .Where(q => q.CategoryId.Equals(id))
+            .Include(q => q.Category)
+            .ToListAsync();
+
+        return Results.Ok(entities);
+    }
+
     // POST api/<QuestsController>
     [HttpPost]
     public async Task<IResult> Post(Quest payload)
