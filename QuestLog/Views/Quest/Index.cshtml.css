@@ -1,0 +1,25 @@
+﻿ul.questlog {
+    list-style: none;
+}
+
+.questlog li {
+    border: 3px solid #ccc;
+    border-radius: 7px;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #eee;
+}
+
+.questlog h3 {
+    font-size: large;
+    font-weight: 700;
+}
+
+li.complete {
+    background-color: #d4edda;
+}
+
+.questlog input {
+    margin: 5px;
+    display: block;
+}
