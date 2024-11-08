@@ -17,6 +17,10 @@
                     type="button"
                     value="@(quest.Complete ? "Reset" : "Turn in quest!")"
                     onclick="location.href='@Url.Action("HandInOrReset","Quest", new { id = quest.Id})'" />
+                <input
+                    type="button"
+                    value="Abandon quest"
+                    onclick="location.href='@Url.Action("Abandon", "Quest", new { id = quest.Id})'" />
             </li>
         }
     } else
