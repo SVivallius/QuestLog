@@ -1,7 +1,8 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     var QuestLog = ViewBag.QuestLog as List<QuestViewModel>;
+    var Categories = ViewBag.Categories as List<CategoryViewModel>;
+    string chosenCategory = String.Empty;
 }
 <h1>Quest log</h1>
 <p>Here's a list of ongoing quests:</p>
@@ -10,9 +11,11 @@
     {
         @foreach (var quest in QuestLog)
         {
-            <li class="@(quest.Complete ? "complete" : "")">
+            @await Html.PartialAsync("_QuestList", quest);
+            @* <li class="@(quest.Complete ? "complete" : "")">
                 <h5>@quest.Name @(quest.Complete ? " : Task Completed!" : "")</h5>
                 <p>@quest.Description</p>
+                <p><span>Category: @quest.CategoryId</span><span>Experience: @quest.Experience</span></p>
                 <input
                     type="button"
                     value="@(quest.Complete ? "Reset" : "Turn in quest!")"
@@ -21,7 +24,7 @@
                     type="button"
                     value="Abandon quest"
                     onclick="location.href='@Url.Action("Abandon", "Quest", new { id = quest.Id})'" />
-            </li>
+            </li> *@
         }
     } else
     {
@@ -36,6 +39,17 @@
             <input name="name" placeholder="Title" type="text" />
             <input name="description" placeholder="Description" type="text" />
             <input name="experience" placeholder="Experience" type="number" />
+            <select name="category" required>
+                <option value="" selected>Select category</option>
+                @foreach (var c in Categories)
+                {
+                    if (c.Id > 1)
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                }
+                <option value="1">Other</option>
+            </select>
             <input type="submit" value="Add quest"/>
         </form>
     </li>

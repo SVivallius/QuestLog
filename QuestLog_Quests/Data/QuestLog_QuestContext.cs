@@ -27,5 +27,36 @@ public class QuestLog_QuestContext : DbContext
         modelBuilder.Entity<Category>()
             .HasMany(c => c.Quests)
             .WithOne(q => q.Category);
+
+        // ***************************************
+        // SEED DATA INTO CATEGORIES
+        // ***************************************
+
+        var seedData = new List<Category>()
+        {
+            new Category()
+            {
+                Id = 1,
+                Name = "Other"
+            },
+            new Category()
+            {
+                Id = 2,
+                Name = "Personal"
+            },
+            new Category()
+            {
+                Id = 3,
+                Name = "Shopping"
+            },
+            new Category()
+            {
+                Id = 4,
+                Name = "Work"
+            }
+        };
+
+        modelBuilder.Entity<Category>()
+            .HasData(seedData);
     }
 }

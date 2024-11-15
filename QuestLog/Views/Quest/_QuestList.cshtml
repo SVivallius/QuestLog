@@ -1,0 +1,14 @@
+﻿@model QuestViewModel
+@{
+    <li class="@(Model.Complete ? "complete" : "")">
+        <h5>@Model.Name @(Model.Complete ? " : Task Completed!" : "")</h5>
+        <p>@Model.Description</p>
+        <p><span>Category: @(Model.CategoryId == null ? "N/A" : Model.CategoryId)</span><span>Experience: @Model.Experience</span></p>
+        <input type="button"
+               value="@(Model.Complete ? "Reset" : "Turn in quest!")"
+               onclick="location.href='@Url.Action("HandInOrReset","Quest", new { id = Model.Id})'" />
+        <input type="button"
+               value="Abandon quest"
+               onclick="location.href='@Url.Action("Abandon", "Quest", new { id = Model.Id})'" />
+    </li>
+}

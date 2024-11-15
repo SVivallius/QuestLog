@@ -19,7 +19,7 @@ li.complete {
     background-color: #d4edda;
 }
 
-.questlog input {
+.questlog input, .questlog option {
     margin: 5px;
     display: block;
 }
