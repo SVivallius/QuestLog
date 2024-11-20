@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuestLog_Quests.Data;
 using QuestLog_Quests.Data.Entities;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace QuestLog_Quests.Controllers;
 
 [Route("api/[controller]")]
@@ -11,18 +12,26 @@ public class QuestsController : ControllerBase
 {
     private readonly QuestLog_QuestContext _db;
     private readonly ILogger<QuestsController> _logger;
+    private readonly JsonSerializerOptions _jsonOpt;
     public QuestsController(QuestLog_QuestContext db, ILogger<QuestsController> logger)
     {
         _db = db;
         _logger = logger;
+
+        _jsonOpt = new()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            PropertyNameCaseInsensitive = true
+        };
     }
 
     // GET: api/<QuestsController>
     [HttpGet]
     public async Task<IResult> Get()
     {
-        var entities = await _db.Quests.ToListAsync();
-        return Results.Ok(entities);
+        var entities = await _db.Quests.Include(q => q.Category).ToListAsync();
+        var json = JsonSerializer.Serialize(entities, _jsonOpt);
+        return Results.Ok(json);
     }
 
     // GET api/<QuestsController>/5
@@ -30,34 +39,37 @@ public class QuestsController : ControllerBase
     public async Task<IResult> Get(int id)
     {
         var entity = await _db.Quests
+            .Include(q => q.Category)
             .FirstOrDefaultAsync(e => e.Id.Equals(id));
 
         if (entity == null)
             return Results.NotFound();
-        return Results.Ok(entity);
+
+        var json = JsonSerializer.Serialize(entity, _jsonOpt);
+        return Results.Ok(json);
     }
 
     // GET api/<QuestController>/bycategory/5
-    [Route("bycategory/{id}")]
-    public async Task<IResult> GetByCategoryAsync(int id)
-    {
-        var entities = await _db.Quests
-            .Where(q => q.CategoryId.Equals(id))
-            .Include(q => q.Category)
-            .ToListAsync();
+    //[Route("bycategory/{id}")]
+    //public async Task<IResult> GetByCategoryAsync(int id)
+    //{
+    //    var entities = await _db.Quests
+    //        .Where(q => q.CategoryId.Equals(id))
+    //        .Include(q => q.Category)
+    //        .ToListAsync();
 
-        return Results.Ok(entities);
-    }
+    //    return Results.Ok(entities);
+    //}
 
     // POST api/<QuestsController>
     [HttpPost]
-    public async Task<IResult> Post(Quest payload)
+    public async Task<IResult> Post(string payload)
     {
         try
         {
-            //var quest = JsonSerializer.Deserialize<Quest>(payload);
+            var quest = JsonSerializer.Deserialize<Quest>(payload, _jsonOpt);
             var result = _db.Quests
-                .Add(payload);
+                .Add(quest);
 
             if (await _db.SaveChangesAsync() < 1)
             {

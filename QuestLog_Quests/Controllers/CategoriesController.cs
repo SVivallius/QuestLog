@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuestLog_Quests.Data;
 using Quests.Data.Entities;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,17 +15,25 @@ namespace Quests.Controllers
     {
         private readonly QuestLog_QuestContext _db;
         private readonly ILogger<CategoriesController> _logger;
+        private readonly JsonSerializerOptions _jsonOpt;
         public CategoriesController(QuestLog_QuestContext db, ILogger<CategoriesController>logger)
         {
             _db = db;
             _logger = logger;
+
+            _jsonOpt = new()
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                PropertyNameCaseInsensitive = true
+            };
         }
         // GET: api/<CategoriesController>
         [HttpGet]
         public async Task<IResult> Get()
         {
             var entities = await _db.Categories.Include(c => c.Quests).ToListAsync();
-            return Results.Ok(entities);
+            var json = JsonSerializer.Serialize(entities, _jsonOpt);
+            return Results.Ok(json);
         }
 
         // GET api/<CategoriesController>/5
@@ -38,7 +47,8 @@ namespace Quests.Controllers
             if (entity == null)
                 return Results.NotFound();
 
-            return Results.Ok(JsonSerializer.Serialize(entity));
+            var json = JsonSerializer.Serialize(entity, _jsonOpt);
+            return Results.Ok(JsonSerializer.Serialize(json));
         }
 
         // POST api/<CategoriesController>

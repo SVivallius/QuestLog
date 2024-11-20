@@ -21,7 +21,7 @@ public class QuestController : Controller
         ViewBag.QuestLog = await _http.GetFromServiceAsync<List<QuestViewModel>>(ServiceHostList.Quests, "quests/");
         var cats = await _http.GetFromServiceAsync<List<CategoryViewModel>>(ServiceHostList.Quests, "categories/");
         ViewBag.Categories = cats;
-        _logger.LogInformation(cats.ToString());
+        //_logger.LogInformation(cats.ToString());
         return View();
     }
 
@@ -36,8 +36,9 @@ public class QuestController : Controller
             CategoryId = category
         };
         string payload = JsonSerializer.Serialize(q, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        _logger.LogInformation(payload);
         var result = await _http.PostToServiceAsync<string>(ServiceHostList.Quests, "quests/", payload);
-        _logger.LogInformation(result);
+        //_logger.LogInformation(result);
 
         return RedirectToAction("Index");
     }

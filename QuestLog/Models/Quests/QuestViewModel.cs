@@ -7,4 +7,5 @@ public class QuestViewModel
     public int Experience { get; set; }
     public bool Complete { get; set; } = false;
     public int? CategoryId { get; set; }
+    public CategoryViewModel Category { get; set; }
 }

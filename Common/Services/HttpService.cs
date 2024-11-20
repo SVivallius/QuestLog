@@ -1,14 +1,22 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Common.Services;
 public class HttpService
 {
     private readonly ILogger<HttpService> _logger;
+    private readonly JsonSerializerOptions _jsonOpt;
     public HttpService(ILogger<HttpService> logger)
     {
         _logger = logger;
+
+        _jsonOpt = new()
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            PropertyNameCaseInsensitive = true
+        };
     }
 
     private async Task<T> SendAsync<T>(HttpMethod method, string service, string requestUri, string? payload)
@@ -32,7 +40,7 @@ public class HttpService
                 if (content != null || content.Trim() != String.Empty)
                 {
                     _logger.LogInformation(content);
-                    return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return JsonSerializer.Deserialize<T>(content, _jsonOpt);
                 }
                     
                 return default;

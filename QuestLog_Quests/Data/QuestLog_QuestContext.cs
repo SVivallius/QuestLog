@@ -24,9 +24,9 @@ public class QuestLog_QuestContext : DbContext
             .WithMany(c => c.Quests)
             .HasForeignKey(q => q.CategoryId);
 
-        modelBuilder.Entity<Category>()
-            .HasMany(c => c.Quests)
-            .WithOne(q => q.Category);
+        //modelBuilder.Entity<Category>()
+        //    .HasMany(c => c.Quests)
+        //    .WithOne(q => q.Category);
 
         // ***************************************
         // SEED DATA INTO CATEGORIES
