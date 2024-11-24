@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuestLog_Quests.Data;
 using QuestLog_Quests.Data.Entities;
+using Quests.Data.DTOs;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 namespace QuestLog_Quests.Controllers;
@@ -30,8 +31,8 @@ public class QuestsController : ControllerBase
     public async Task<IResult> Get()
     {
         var entities = await _db.Quests.Include(q => q.Category).ToListAsync();
-        var json = JsonSerializer.Serialize(entities, _jsonOpt);
-        return Results.Ok(json);
+        if (entities.Count == 0) return Results.Ok(new List<QuestDTO>());
+        return Results.Ok(QuestsToDTO(entities));
     }
 
     // GET api/<QuestsController>/5
@@ -45,23 +46,9 @@ public class QuestsController : ControllerBase
         if (entity == null)
             return Results.NotFound();
 
-        var json = JsonSerializer.Serialize(entity, _jsonOpt);
-        return Results.Ok(json);
+        return Results.Ok(QuestsToDTO(entity));
     }
 
-    // GET api/<QuestController>/bycategory/5
-    //[Route("bycategory/{id}")]
-    //public async Task<IResult> GetByCategoryAsync(int id)
-    //{
-    //    var entities = await _db.Quests
-    //        .Where(q => q.CategoryId.Equals(id))
-    //        .Include(q => q.Category)
-    //        .ToListAsync();
-
-    //    return Results.Ok(entities);
-    //}
-
-    // POST api/<QuestsController>
     [HttpPost]
     public async Task<IResult> Post(string payload)
     {
@@ -140,5 +127,38 @@ public class QuestsController : ControllerBase
             _logger.LogCritical(ex.Message);
             return Results.StatusCode(500);
         }
+    }
+
+    private List<QuestDTO> QuestsToDTO(List<Quest> entities)
+    {
+        return entities.Select(e => new QuestDTO
+        {
+            Id = e.Id,
+            Name = e.Name,
+            Description = e.Description,
+            Experience = e.Experience,
+            Complete = e.Complete,
+            Category = new CategoryDTO
+            {
+                Id = e.Category.Id,
+                Name = e.Category.Name,
+            }
+        }).ToList();
+    }
+    private QuestDTO QuestsToDTO(Quest entity)
+    {
+        return new QuestDTO
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            Description = entity.Description,
+            Experience = entity.Experience,
+            Complete = entity.Complete,
+            Category = new CategoryDTO
+            {
+                Id = entity.Category.Id,
+                Name = entity.Category.Name,
+            }
+        };
     }
 }

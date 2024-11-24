@@ -1,7 +1,6 @@
 ﻿using Quests.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 
 namespace QuestLog_Quests.Data.Entities;
 public class Quest
